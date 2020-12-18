@@ -3,6 +3,13 @@ import "./App.css";
 import Weather from "./components/Weather";
 import axios from "axios";
 import styled from "styled-components";
+import Button from '@material-ui/core/Button';
+import { TextField } from "@material-ui/core";
+import { makeStyles } from '@material-ui/core/styles';
+import WarningIcon from '@material-ui/icons/Warning';
+import CloudIcon from '@material-ui/icons/Cloud';
+import PersonPinIcon from '@material-ui/icons/PersonPin';
+
 const StyledApp = styled.div`
   h2 {
     color: red;
@@ -16,16 +23,15 @@ const StyledApp = styled.div`
   }
   input {
     text-align: center;
-    box-sizing: border-box;
-    border: 2px solid black;
-    font-size: 1.3rem;
+    color: red;
+  
    
   }
   .no-weather {
     text-align: center;
     margin-top: 15%;
     font-size: 1.5rem;
-    color: red;
+    color: white;
     margin-right: 5%;
     margin-left: 5%;
     font-family: "Architects Daughter", cursive;
@@ -37,16 +43,11 @@ const StyledApp = styled.div`
   }
   button {
     font-size: 1rem;
-    border-radius: 6px;
-    color: red;
-    background-color: black;
-    border-color: red;
     font-family: "Architects Daughter", cursive;
     text-align:center;
+    color:white;
   }
   button:hover {
-    color: white;
-    border-color: white;
     cursor:pointer;
   }
   footer p {
@@ -57,6 +58,16 @@ const StyledApp = styled.div`
   }
  
 `;
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+      width: '25ch',
+    },
+  },
+}));
+
 function App() {
   const [query, setQuery] = useState("");
   const [weather, setWeather] = useState();
@@ -82,28 +93,31 @@ function App() {
     e.preventDefault();
     search();
   };
-
+  const classes = useStyles();
   return (
     <StyledApp>
       <h2>Meme Weather</h2>
       <div className="search-box">
-        <form onSubmit={onSubmit}>
-          <input
+        <form onSubmit={onSubmit} className={classes.root} autoComplete='off' >
+          <TextField
             type="text"
+            id="standard-basic"
             className="search-bar"
             placeholder="City, State"
             onChange={(e) => setQuery(e.target.value)}
             value={query}
-          ></input>
+            color='primary'
+
+          ></TextField>
           <div className='send-button'>
-          <button>Send Location</button>
+          <Button variant="contained" color="primary" onClick={search} > <PersonPinIcon fontSize='small' /> Send Location</Button>
           </div>
         </form>
       </div>
 
       {weather === undefined ? (
         <div className="no-weather">
-          <p>No weather to display</p>
+          <p> <WarningIcon color='action'/> No weather to display <WarningIcon color='action'/></p>
           <p>Press Send Location to submit your city , state</p>
         </div>
       ) : (
@@ -111,7 +125,7 @@ function App() {
       )}
 
       <footer>
-        <p>Meme Weather 2020</p>
+        <p><CloudIcon fontSize='small' /> Meme Weather 2020 <CloudIcon fontSize='small' /></p> 
       </footer>
     </StyledApp>
   );
