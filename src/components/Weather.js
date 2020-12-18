@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Button from '@material-ui/core/Button';
 const StyledWeather = styled.div`
   h2 {
     font-size: 1.3rem;
@@ -253,7 +254,7 @@ export default function Weather(props) {
             <p>Humidity: {props.weather.current.humidity} %</p>
             <p>Feels like: {Math.round(props.weather.current.feelslike_f)} f</p>
             <div className='clear-button'>
-            <button onClick={props.clearWeather}>Clear Weather</button>
+            <Button variant="contained" color="primary" onClick={props.clearWeather} size='small'>Clear Weather</Button>
             </div>
           </div>
         </div>
